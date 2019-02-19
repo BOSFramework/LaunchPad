@@ -1,0 +1,46 @@
+﻿@model BOS.LaunchPad.Features.UserManagement.UserManagementOverviewViewModel
+<div>
+    <h1>Manage Users</h1>
+    <hr />
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>User Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>User Details</th>
+                <th>Delete User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Username</td>
+                    <td>@user.Email</td>
+                    <td><a asp-controller="UserManagement" asp-action="Edit" asp-route-Id="@user.Id">Details</a></td>
+                    <td><a asp-controller="UserManagement" asp-action="Delete" asp-route-userId="@user.Id">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div class="BOSEdit_User">
+        <a class="btn btn-primary" style="float: right" asp-controller="UserManagement" asp-action="AddUser">Add User</a>
+    </div>
+    <div style="display:none">
+        <h2>Add New User</h2>
+        <form asp-controller="UserManagement" asp-action="AddUser" method="post" class="form-group">
+            Username:
+            <input asp-for="NewUser.Username" /><br />
+            Email:
+            <input asp-for="NewUser.Email" /><br />
+            Password:
+            <input asp-for="NewUser.Password" type="password" /><br />
+            Retype Password:
+            <input asp-for="NewUser.PasswordConfirmation" type="password" /><br />
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</div>

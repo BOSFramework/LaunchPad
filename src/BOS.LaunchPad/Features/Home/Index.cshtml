@@ -1,0 +1,82 @@
+﻿@model BOS.LaunchPad.Features.Home.HomeViewModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div class="container BOS2_dashboard">
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="col-lg-4 col-md-push-4">
+            <h4>Welcome @Model.Username</h4>
+            <h5><b>Email :</b> @Model.Email</h5>
+        </div>
+    </div>
+    @if (Model.IsAdmin)
+    {
+        <div class="row" style="margin-top:20px;">
+            <h3 style="margin-left:.75em">Admin</h3>
+            <div class="col-md-3 col-sm-6">
+                <div class="BOS20dashboard_card">
+                    <h4>
+                        <a asp-controller="UserManagement" asp-action="Index">User Management</a>
+                    </h4>
+
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="BOS20dashboard_card">
+                    <h4>
+                        <a asp-controller="RoleManagement" asp-action="Index">Role Management</a>
+                    </h4>
+
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model.IsAdmin)
+    {
+        <div class="row" style="margin-top:1.5em">
+            <h3 style="margin:.70em">Permitted Modules and Operations:</h3>
+            @foreach (var module in Model.Modules)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="BOS20dashboard_card">
+                        <h4>@module.Name</h4>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var op in module.Operations)
+                            {
+                                <li class="list-group-item">
+                                    @op.Name
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else if (Model.Permissions.Count > 0)
+    {
+        <div class="row" style="margin-top:1.5em">
+            <h3 style="margin:.70em">Permitted Modules and Operations:</h3>
+            @foreach (var permissionsSet in Model.Permissions)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="BOS20dashboard_card">
+                        <h4>@Model.Modules.Where(m => m.Code == permissionsSet.Code).FirstOrDefault().Name</h4>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var op in permissionsSet.Permissions)
+                            {
+                                <li class="list-group-item">
+                                    @Model.Modules.FirstOrDefault(m => m.Code == permissionsSet.Code).Operations.FirstOrDefault(o => o.Code == op.Code).Name
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,112 @@
+﻿@model BOS.LaunchPad.Features.UserManagement.EditUserViewModel
+
+<div class="container BOS2_dashboard">
+    <div class="row">
+        <br />
+        <div class="col-md-6">
+            <div class="Edit_Header">
+                <h1>Edit Profile</h1>
+            </div>
+            <h3>Account Details</h3>
+            <hr />
+            <div class="BOSEdit_User">
+                <form asp-controller="UserManagement" asp-action="Edit" method="post">
+                    <input type="hidden" asp-for="@Model.Id" />
+                    <input type="hidden" asp-for="@Model.EmailRecord" />
+                    <input type="hidden" asp-for="@Model.UsernameRecord" />
+                    <div class="form-group">
+                        <label asp-for="@Model.Username"></label>
+                        <input asp-for="@Model.Username" class="form-control" />
+                        <span asp-validation-for="@Model.Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Email"></label>
+                        <input asp-for="@Model.Email" class="form-control" />
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-default">Update</button>
+                    <button type="button" class="btn-link" data-toggle="modal" data-target="#ChangePassword" aria-label="Close">Change Password</button>
+                </form>
+            </div>
+            <h3>Role Management</h3>
+            <hr />
+            <h5>Assigned</h5>
+        </div>
+        <div class="col-md-6 text-right">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-responsive table-hover table-striped BOS20users_table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model.AssignedRoles)
+                    {
+                        <tr>
+                            <td>@role.Name</td>
+                            <td><a asp-controller="UserManagement" asp-action="RevokeRole" asp-route-role="@role.Id" asp-route-user="@Model.Id">Remove</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <h5>Not Assigned</h5>
+            <table class="table table-bordered table-responsive table-hover table-striped BOS20users_table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model.AllRoles)
+                    {
+                        @if (!Model.AssignedRoles.Any(r => r.Id == role.Id))
+                        {
+                            <tr>
+                                <td>@role.Name</td>
+                                <td><a asp-controller="UserManagement" asp-action="AddRole" asp-route-roleId="@role.Id" asp-route-userId="@Model.Id">Add</a></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="ChangePassword" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3>Enter New Password</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-group" asp-controller="UserManagement" asp-action="ChangePassword" method="post">
+                        <input type="hidden" asp-for="@Model.Id" />
+                        <div class="form-group">
+                            <label asp-for="@Model.NewPassword"></label>
+                            <input class="form-control" asp-for="@Model.NewPassword" />
+                            <span asp-validation-for="@Model.NewPassword" class="text-danger"></span><br />
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="float: right; margin: .5em">Close</button>
+                        <button type="submit" class="btn btn-primary" style="float: right; margin: .5em">Update</button>
+                    </form>
+                </div>
+                <div class="modal-footer" style="margin-top: 1em">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
