@@ -8,8 +8,8 @@
     ".NETCoreApp,Version=v2.1": {
       "BOS.Auth.Client/1.0.0": {
         "dependencies": {
-          "BOS.Base.Client": "1.0.0",
-          "Microsoft.NETCore.App": "2.1.0"
+          "Microsoft.NETCore.App": "2.1.0",
+          "BOS.Base.Client": "1.0.0.0"
         },
         "runtime": {
           "BOS.Auth.Client.dll": {}
@@ -41,9 +41,12 @@
           "Microsoft.NETCore.Platforms": "2.1.0"
         }
       },
-      "BOS.Base.Client/1.0.0": {
+      "BOS.Base.Client/1.0.0.0": {
         "runtime": {
-          "BOS.Base.Client.dll": {}
+          "BOS.Base.Client.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
@@ -85,7 +88,7 @@
     "Microsoft.NETCore.Platforms/2.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-TT+QCi9LcxGTjBssH7S7n5+8DVcwfG4DYgXX7Dk7+BfZ4oVHj8Q0CbYk9glzAlHLsSt3bYzol+fOdra2iu6GOw==",
+      "sha512": "sha512-aSTPL94NloSiQVL5Len8wbjFKOnoAX/vOh3s3DF6g3c7GUUMLCDvnBhmA72M2iN2AedyA8hpr7m89kzSAKUnJQ==",
       "path": "microsoft.netcore.platforms/2.1.0",
       "hashPath": "microsoft.netcore.platforms.2.1.0.nupkg.sha512"
     },
@@ -103,8 +106,8 @@
       "path": "netstandard.library/2.0.3",
       "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
     },
-    "BOS.Base.Client/1.0.0": {
-      "type": "project",
+    "BOS.Base.Client/1.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }
